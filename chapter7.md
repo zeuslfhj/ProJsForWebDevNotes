@@ -24,7 +24,8 @@ function b() {
 ```
 
 - 下列方法声明的方式在大多数浏览器中可能会直接返回第二个，但实际在node & firefox & chrome & safari中尝试后，node & chrome & firefox是根据condition的条件来创建不同的方法，与表达式的声明结果一致，但是safari只会调用第二个方法，因此使用时需要特别注意
-```
+
+```javascript
 var condition = false;
 
 if (condition) {
@@ -80,7 +81,7 @@ var factorial = (function f(num) {
 - 书上表达
     - 闭包是有权访问另一个函数作用域中的变量的函数
     - 常见方式一个函数内部创建另一个函数
-- MDN定义（lexical environment
+- MDN定义（lexical environment）
     - A closure is the combination of a function and the lexical environment within which that function was declared.
 - 个人理解：闭包是作用域链 + 函数本身的组合，作用域链是其中的一个部分
 
