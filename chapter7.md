@@ -41,6 +41,7 @@ if (condition) {
 
 ### 递归调用
 - 构建方式一，下列调用在node环境下运行正确，不过chrome下运行报错
+
 ```javascript
 function factorial(num) {
     if (num <= 1) {
@@ -56,6 +57,7 @@ anotherFactorial(4); // 出错，factorial实际已经被摧毁儿不存在
 ```
 
 - 构建方式二，使用callee构建递归调用，但严格模式下callee并不能通过脚本访问，因此会报错
+
 ```javascript
 function factorial(num) {
     if (num <= 1) {
@@ -67,6 +69,7 @@ function factorial(num) {
 ```
 
 - 构建方式三，使用函数表达式
+
 ```javascript
 var factorial = (function f(num) {
     if (num <= 1) {
@@ -86,6 +89,7 @@ var factorial = (function f(num) {
 - 个人理解：闭包是作用域链 + 函数本身的组合，作用域链是其中的一个部分
 
 - 典型的误解：闭包存储的是VO指针而不是某个变量的值或指针，因此下方返回的使用时VO中i的值10，而不是创建方法时的1～10
+
 ```javascript
 function createFunctions() {
     var result = new Array();
@@ -97,7 +101,9 @@ function createFunctions() {
     return result;
 }
 ```
+
 - 为了返回1～10，可以使用另一种方式来创建闭包
+
 ```javascript
 function createFunctions() {
     var result = new Array();
@@ -118,6 +124,7 @@ function createFunctions() {
 - 由于编写闭包的方式不同，需要特别注意一下
 - 内部函数在搜索this & arguments时，只会搜索到其活动对象为止，因此永远不可能直接访问外部函数中的这两个变量。不过，把外部作用域中的this对象保存在一个闭包能够访问到的变量里，就可以让闭包访问该对象了
 - 下列不同的调用方法会引起不同的this值
+
 ```javascript
 var name = 'The Window';
 var object = {
@@ -134,6 +141,7 @@ object.getName(); //"My Object"
 
 ### 内存泄漏
 - 典型的泄漏，element元素持有闭包的引用，而闭包持有assignHandler的VO，VO中含有element元素的引用，引起循环引用，内存无法被正确释放
+
 ```javascript
 function assignHandler() {
     var element = document.getElementById(" someElement");
@@ -157,7 +165,9 @@ function assignHandler() {
 ```
 
 ### 闭包的应用
+
 #### 模仿块级作用域
+
 ```javascript
 function outputNumbers(count) {
     (function() {
@@ -168,7 +178,9 @@ function outputNumbers(count) {
     alert(i); //导致一个错误！ i不可被访问
 }
 ```
+
 #### 私有变量
+
 - 私有变量
 
 ```javascript
@@ -204,6 +216,7 @@ function MyObject() {
     };
 })();
 ```
+
 - 模块模式
 
 ```javascript
@@ -223,6 +236,7 @@ var singleton = function() {
     };
 }();
 ```
+
 - 增强的模块模式: 增强模式和普通的区别是在于加入了类型的限制，例如下列代码中的模块必须是BaseComponent的实例对象
 
 ```javascript
