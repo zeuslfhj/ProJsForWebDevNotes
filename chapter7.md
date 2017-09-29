@@ -140,7 +140,7 @@ object.getName(); //"My Object"
 ```
 
 ### 内存泄漏
-- 典型的泄漏，element元素持有闭包的引用，而闭包持有assignHandler的VO，VO中含有element元素的引用，引起循环引用，内存无法被正确释放
+- 典型的泄漏，element元素持有闭包的引用，而闭包持有assignHandler的VO，VO中含有element元素的引用，引起循环引用，内存无法被正确释放，但这类泄漏在新版本的浏览器中已经不再会产生，ie9以前的浏览器会引起
 
 ```javascript
 function assignHandler() {
@@ -161,6 +161,28 @@ function assignHandler() {
         alert(id);
     };
     element = null;
+}
+```
+
+- 遗忘释放的内存泄漏
+```javascript
+var cache = [];
+function createLeakObjects() {
+    var removeCount = 0;
+    for(var i = 0; i < 100000; i++) {
+        (function createEle(){
+            var ele = document.createElement('div');
+            var id = 'div' + i;
+            ele.setAttribute('id', id);
+            var func = function clickEvt() {
+                console.log(ele.getAttribute('id'));
+            };
+            ele.addEventListener('click', func);
+            cache.push(func);
+        })();
+    }
+
+    console.log('creating finished');
 }
 ```
 
@@ -357,4 +379,5 @@ alert(window.b); // still 20
 ```
 
 > References
-> http://dmitrysoshnikov.com/ecmascript/chapter-2-variable-object/
+> 原Variable Object参考：http://dmitrysoshnikov.com/ecmascript/chapter-2-variable-object/
+> 新Lexical系列参考：http://ecma-international.org/ecma-262/5.1/#sec-10.2
