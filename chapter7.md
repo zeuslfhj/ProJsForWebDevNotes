@@ -379,5 +379,7 @@ alert(window.b); // still 20
 ```
 
 > References
+> 
 > 原Variable Object参考：http://dmitrysoshnikov.com/ecmascript/chapter-2-variable-object/
+> 
 > 新Lexical系列参考：http://ecma-international.org/ecma-262/5.1/#sec-10.2
